@@ -1,14 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.ecommerce.jdbc;
 
-/**
- *
- * @author cdi403
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class ConnectionUtil {
-    
+
+    public static void close(Connection cnt) throws SQLException {
+        cnt.close();
+    }
+
+    public static void close(ResultSet rs) throws SQLException {
+        rs.close();
+    }
+
+    public static void close(Statement stm) throws SQLException {
+        stm.close();
+    }
+
+    public static void close(PreparedStatement pstm) throws SQLException {
+        pstm.close();
+    }
 }
