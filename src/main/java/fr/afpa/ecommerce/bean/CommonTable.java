@@ -1,14 +1,14 @@
 package fr.afpa.ecommerce.bean;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class CommonTable implements Serializable {
 
-    private int id;
-    private Date created;
-    private Date updated;
-    private boolean deleted;
+    protected int id;
+    protected Date created;
+    protected Date updated;
+    protected boolean deleted;
 
     public CommonTable() {
     }

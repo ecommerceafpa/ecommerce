@@ -59,6 +59,12 @@ public class Customer extends CommonTable implements Serializable {
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Customer ::: [id = %s, firstName = %s, lastName = %s, userName = %s, password = %s, disabled = %s, created = %s, updated = %s, deleted = %s]", 
+                id, firstName, lastName, userName, password, disabled, created, updated, deleted); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
