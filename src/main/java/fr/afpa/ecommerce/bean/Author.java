@@ -2,8 +2,8 @@ package fr.afpa.ecommerce.bean;
 
 import java.io.Serializable;
 
-public class Author extends CommonTable implements Serializable{
-    
+public class Author extends CommonTable implements Serializable {
+
     private String firstName;
     private String lastName;
     private String portrait;
@@ -15,6 +15,14 @@ public class Author extends CommonTable implements Serializable{
         this.firstName = firstName;
         this.lastName = lastName;
         this.portrait = portrait;
+    }
+
+    public Author(int id, String firstName, String lastName, String portrait) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.portrait = portrait;
+
     }
 
     public String getFirstName() {
@@ -40,5 +48,5 @@ public class Author extends CommonTable implements Serializable{
     public void setPortrait(String portrait) {
         this.portrait = portrait;
     }
-   
+
 }

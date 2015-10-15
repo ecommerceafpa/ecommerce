@@ -2,14 +2,14 @@ package fr.afpa.ecommerce.bean;
 
 import java.io.Serializable;
 import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 
-public class Book extends CommonTable implements Serializable{
-    
+public class Book extends CommonTable implements Serializable {
+
     private int editorId;
     private int languageId;
     private int taxId;
-    private int isbn;
+    private long isbn;
     private Blob image;
     private String title;
     private String subtitle;
@@ -17,24 +17,13 @@ public class Book extends CommonTable implements Serializable{
     private int nbPage;
     private Date releaseDate;
     private int edition;
-    private float price;
+    private double price;
 
     public Book() {
     }
 
-    public Book(int editorId, int languageId, int taxId, int isbn, Blob image, String title, String subtitle, String summary, int nbPage, Date releaseDate, int edition, float price) {
-        this.editorId = editorId;
-        this.languageId = languageId;
-        this.taxId = taxId;
-        this.isbn = isbn;
-        this.image = image;
-        this.title = title;
-        this.subtitle = subtitle;
-        this.summary = summary;
-        this.nbPage = nbPage;
-        this.releaseDate = releaseDate;
-        this.edition = edition;
-        this.price = price;
+    public Book(int id) {
+        super(id);
     }
 
     public int getEditorId() {
@@ -61,11 +50,11 @@ public class Book extends CommonTable implements Serializable{
         this.taxId = taxId;
     }
 
-    public int getIsbn() {
+    public long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(long isbn) {
         this.isbn = isbn;
     }
 
@@ -125,15 +114,12 @@ public class Book extends CommonTable implements Serializable{
         this.edition = edition;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-    
-    
-    
-    
+
 }
