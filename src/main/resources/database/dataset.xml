@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <author id="1" firstname="toot1" lastname="titi1" portrait="mon portrait1" />
+    <author id="2" firstname="toot2" lastname="titi2" portrait="mon portrait2" />
+    <author id="3" firstname="toot3" lastname="titi3" portrait="mon portrait3" />
+    <editor id="1" name="youyou" />
+   <!-- <tax id="1" name="taxito" value="5.5" /> -->
+    <customer id="1" firstname="toot3" lastname="titi3" username="tic" password="pm"/>
+    
+    
+</dataset>

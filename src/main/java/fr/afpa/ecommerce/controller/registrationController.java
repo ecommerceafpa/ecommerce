@@ -1,12 +1,6 @@
 package fr.afpa.ecommerce.controller;
 
-import fr.afpa.ecommerce.bean.Customer;
-import fr.afpa.ecommerce.model.CustomerModel;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,19 +13,6 @@ public class registrationController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String firstName = "yuyu";
-        String lastName = "fufu";
-        String userName = "tutu";
-        String password = "ruru";
-        
-        Customer customer=new Customer(firstName, lastName, userName, password);
-
-        CustomerModel customerModel = new CustomerModel();
-        try {
-            customerModel.save(customer);
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(registrationController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
