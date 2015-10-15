@@ -2,15 +2,21 @@ package fr.afpa.ecommerce.bean;
 
 import java.io.Serializable;
 
-public class Tax extends CommonTable implements Serializable{
-    
+public class Tax extends CommonTable implements Serializable {
+
     private String name;
-    private float value;
+    private Double value;
 
     public Tax() {
     }
 
-    public Tax(String name, float value) {
+    public Tax(String name, Double value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public Tax(int id, String name, Double value) {
+        super(id);
         this.name = name;
         this.value = value;
     }
@@ -23,12 +29,12 @@ public class Tax extends CommonTable implements Serializable{
         this.name = name;
     }
 
-    public float getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(Double value) {
         this.value = value;
     }
-      
+
 }

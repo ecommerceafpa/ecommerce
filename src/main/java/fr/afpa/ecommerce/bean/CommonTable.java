@@ -1,7 +1,7 @@
 package fr.afpa.ecommerce.bean;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class CommonTable implements Serializable {
 
@@ -11,6 +11,10 @@ public class CommonTable implements Serializable {
     protected boolean deleted;
 
     public CommonTable() {
+    }
+
+    public CommonTable(int id) {
+        this.id = id;
     }
 
     public int getId() {
