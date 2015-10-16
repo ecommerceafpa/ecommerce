@@ -46,4 +46,9 @@ public class Category extends CommonTable implements Serializable {
         this.parentCategoryId = parentCategoryId;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Category ::: [id = %s, parentCategoryId = %s, name = %s, deleted = %s, created = %s, updated = %s]", id, parentCategoryId, name, deleted, created, updated);
+    }
+
 }

@@ -3,6 +3,7 @@ package fr.afpa.ecommerce.model;
 import fr.afpa.ecommerce.bean.Tax;
 import fr.afpa.ecommerce.jdbc.ConnectionFactory;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import org.dbunit.DatabaseUnitException;
@@ -16,13 +17,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.runners.MethodSorters;
-
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TaxModelTest {
-    
+
     @Before
     public void setUpDataBase() throws IOException, SQLException, ClassNotFoundException, DataSetException, DatabaseUnitException {
         IDatabaseConnection connection = new DatabaseConnection(ConnectionFactory.getConnection());
@@ -36,7 +35,7 @@ public class TaxModelTest {
         try {
             //Save
             TaxModel taxModel = new TaxModel();
-            Tax tax = new Tax("jtetaxe", 19.6f);
+            Tax tax = new Tax("jtetaxe", new BigDecimal(19.6));
             tax = taxModel.save(tax);
             assertNotNull("Save : " + tax.toString(), tax);
 
@@ -62,7 +61,7 @@ public class TaxModelTest {
         try {
             //Update
             TaxModel taxModel = new TaxModel();
-            Tax tax = new Tax("encoreunetaxe", 38.7f);
+            Tax tax = new Tax("encoreunetaxe", new BigDecimal(38.7));
             tax.setId(1);
             boolean isUpdated = taxModel.update(tax);
             assertTrue(isUpdated);
@@ -97,5 +96,5 @@ public class TaxModelTest {
         }
 
     }
-    
+
 }

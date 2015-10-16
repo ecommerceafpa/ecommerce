@@ -3,9 +3,17 @@
     <author id="1" firstname="toot1" lastname="titi1" portrait="mon portrait1" />
     <author id="2" firstname="toot2" lastname="titi2" portrait="mon portrait2" />
     <author id="3" firstname="toot3" lastname="titi3" portrait="mon portrait3" />
+    
     <editor id="1" name="youyou" />
-   <!-- <tax id="1" name="taxito" value="5.5" /> -->
+    
+    <tax id="1" name="taxito" value="15.5" /> 
+    
     <customer id="1" firstname="toot3" lastname="titi3" username="tic" password="pm"/>
+    
+    <category id="1" parent_category_id=""  name="informatique"/>
+    <category id="2" parent_category_id="1" name="java"/>
+    <category id="3" parent_category_id=""  name="graphisme"/>
+    
     
     
 </dataset>

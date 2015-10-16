@@ -44,6 +44,7 @@ public class AuthorModelTest {
         }
     }
 
+    @Ignore
     @Test
     public void test2Find() {
 
@@ -57,6 +58,7 @@ public class AuthorModelTest {
 
     }
 
+    @Ignore
     @Test
     public void test3Update() {
         try {
@@ -72,6 +74,7 @@ public class AuthorModelTest {
 
     }
 
+    @Ignore
     @Test
     public void test4FindAll() {
         try {
@@ -83,6 +86,7 @@ public class AuthorModelTest {
         }
     }
 
+    @Ignore
     @Test
     public void test5Delete() {
         try {

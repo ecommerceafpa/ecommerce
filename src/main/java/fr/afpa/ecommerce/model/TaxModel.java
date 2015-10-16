@@ -23,7 +23,7 @@ public class TaxModel implements Crud<Tax> {
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
         pstm.setString(1, tax.getName());
-        pstm.setFloat(2, tax.getValue());
+        pstm.setBigDecimal(2, tax.getValue());
 
         int rows = pstm.executeUpdate();
         if (rows == 0) {
@@ -58,7 +58,7 @@ public class TaxModel implements Crud<Tax> {
             tax = new Tax();
             tax.setId(rs.getInt("id"));
             tax.setName(rs.getString("name"));
-            tax.setValue(rs.getFloat("value"));            
+            tax.setValue(rs.getBigDecimal("value"));            
         }
 
         ConnectionUtil.close(rs);
@@ -80,7 +80,7 @@ public class TaxModel implements Crud<Tax> {
             Tax tax = new Tax();
             tax.setId(rs.getInt("id"));
             tax.setName(rs.getString("name"));
-            tax.setValue(rs.getFloat("value"));            
+            tax.setValue(rs.getBigDecimal("value"));            
             taxs.add(tax);
         }
 
@@ -98,7 +98,7 @@ public class TaxModel implements Crud<Tax> {
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setString(1, tax.getName());
-        pstm.setFloat(2, tax.getValue());        
+        pstm.setBigDecimal(2, tax.getValue());        
         pstm.setInt(3, tax.getId());
 
         int exe = pstm.executeUpdate();
