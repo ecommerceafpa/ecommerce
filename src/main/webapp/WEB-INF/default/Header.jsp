@@ -14,6 +14,7 @@
         <!-- Bootstrap Core CSS -->
         <link href="<c:url value="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/dist/css/heroic-features.css"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/dist/css/shop-item.css"/>" rel="stylesheet">
     </head>
 
     <body>

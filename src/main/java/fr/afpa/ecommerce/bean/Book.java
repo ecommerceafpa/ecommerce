@@ -23,6 +23,7 @@ public class Book extends CommonTable implements Serializable {
     private String languageName;
     private Integer[] authorIds;
     private Integer[] categoryIds;
+    private Integer eventId;
 
     public Book() {
     }
@@ -158,5 +159,15 @@ public class Book extends CommonTable implements Serializable {
     public void setCategoryIds(Integer[] categoryIds) {
         this.categoryIds = categoryIds;
     }
+
+    public Integer getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
+    }
+    
+    
 
 }

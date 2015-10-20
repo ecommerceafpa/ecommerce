@@ -39,6 +39,7 @@ public class HomeController extends HttpServlet {
         try {
             request.setAttribute("events", eventModel.findCurrentEvent());
             request.setAttribute("categories", categoryModel.findParentCategories());
+            request.setAttribute("books", bookModel.findBookByEvent());
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }

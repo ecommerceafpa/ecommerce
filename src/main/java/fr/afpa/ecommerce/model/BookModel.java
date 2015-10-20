@@ -274,4 +274,74 @@ public class BookModel implements Crud<Book> {
         ConnectionUtil.close(cnt);
     }
 
+    public List<Book> findBookByEvent() throws SQLException, IOException, ClassNotFoundException {
+        List<Book> books = new ArrayList<>();
+
+        String req = "SELECT b.id AS book_id, evt.id AS event_id, b.title, b.subtitle, e.name AS editor, b.release_date "
+                + "FROM book b "
+                + "JOIN editor e on(b.editor_id = e.id) "
+                + "JOIN language lang on(lang.id = b.language_id) "
+                + "JOIN book_event be on(b.id = be.book_id) "
+                + "JOIN event evt on(evt.id = be.event_id) "
+                + "WHERE b.deleted = false AND current_date() >= evt.start_date AND current_date() <= evt.end_date";
+
+        Connection cnt = ConnectionFactory.getConnection();
+        Statement stm = cnt.createStatement();
+        ResultSet rs = stm.executeQuery(req);
+
+        while (rs.next()) {
+            Book book = new Book();
+            book.setId(rs.getInt("book_id"));
+            book.setTitle(rs.getString("title"));
+            book.setSubtitle(rs.getString("subtitle"));
+            book.setReleaseDate(rs.getDate("release_date"));
+            book.setEditorName(rs.getString("editor"));
+            book.setEventId(rs.getInt("event_id"));
+            books.add(book);
+        }
+
+        ConnectionUtil.close(rs);
+        ConnectionUtil.close(stm);
+        ConnectionUtil.close(cnt);
+
+        return books;
+    }
+
+    public Book detailBook(Integer id) throws SQLException, IOException, ClassNotFoundException {
+
+        Book book = null;
+        String req = "SELECT b.title, b.edition, b.subtitle, b.price*(1+t.value/100) AS price, e.name AS editor, b.release_date, t.value, b.summary, b.isbn, b.nb_page, lang.name AS language "
+                    + "FROM book b "
+                    + "JOIN editor e on(b.editor_id = e.id) "
+                    + "JOIN language lang on(lang.id = b.language_id) "
+                    + "JOIN tax t on(b.tax_id = t.id) "
+                    + "where b.id=?";
+        Connection cnt = ConnectionFactory.getConnection();
+        PreparedStatement pstm = cnt.prepareStatement(req);
+        pstm.setInt(1, id);
+
+        ResultSet rs = pstm.executeQuery();
+
+        while (rs.next()) {
+            book = new Book();
+            
+            book.setEditorName(rs.getString("editor"));
+            book.setLanguageName(rs.getString("language"));           
+            book.setIsbn(rs.getLong("isbn"));
+            book.setTitle(rs.getString("title"));
+            book.setSubtitle(rs.getString("subtitle"));
+            book.setSummary(rs.getString("summary"));
+            book.setNbPage(rs.getInt("nb_page"));
+            book.setReleaseDate(rs.getDate("release_date"));
+            book.setEdition(rs.getInt("edition"));
+            book.setPrice(rs.getBigDecimal("price"));           
+        }
+
+        ConnectionUtil.close(rs);
+        ConnectionUtil.close(pstm);
+        ConnectionUtil.close(cnt);
+
+        return book;
+    }
+
 }
