@@ -15,10 +15,25 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                 <div class="caption-full">
-                    <h4 class="pull-right"><fmt:formatNumber type="currency" currencySymbol="&#8364;" value="${book.price}" /></h4>
-                    <h4>${book.title}</h4>
-                    <h5>${book.subtitle}</h5>                    
+                    <h4 class="pull-right">Prix: <fmt:formatNumber type="currency" currencySymbol="&#8364;" value="${book.price}" /></h4><br>     
+                    <h2>${book.title}</h2>
+                    <h3>${book.subtitle}</h3>                    
                     <p>${book.summary}</p>
+                </div>
+                <div class="col-md-12">
+                    <h4 class="pull-left">Langue: ${book.languageName} </h4>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="pull-left">Editeur: ${book.editorName} </h4>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="pull-right">Numéro ISBN: ${book.isbn} </h4>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="pull-left">Date d'édition: <fmt:formatDate pattern="yyyy" value="${book.releaseDate}"  /> </h4>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="pull-right">Nombre de pages: ${book.nbPage} </h4>
                 </div>
                 <div class="ratings">
                     <p class="pull-right">3 reviews</p>
