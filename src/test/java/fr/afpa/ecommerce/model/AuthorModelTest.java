@@ -19,7 +19,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.runners.MethodSorters;
 
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AuthorModelTest {
 
@@ -31,75 +30,43 @@ public class AuthorModelTest {
         connection.close();
     }
 
-    @Test
-    public void test1Save() {
-        try {
-            //Save
-            AuthorModel authorModel = new AuthorModel();
-            Author author = new Author("Yacine", "YOUSFI", "Mon portrait");
-            author = authorModel.save(author);
-            assertNotNull("Save : " + author.toString(), author);
-
-        } catch (ClassNotFoundException | IOException | SQLException e) {
-        }
-    }
-
     @Ignore
     @Test
-    public void test2Find() {
-
-        try {
-            //Find
-            AuthorModel authorModel = new AuthorModel();
-            Author author = authorModel.find(1);
-            assertNotNull(author);
-        } catch (ClassNotFoundException | IOException | SQLException e) {
-        }
+    public void test1Save() throws IOException, SQLException, ClassNotFoundException {
 
     }
 
     @Ignore
     @Test
-    public void test3Update() {
-        try {
-            //Update
-            AuthorModel authorModel = new AuthorModel();
-            Author author = new Author("Riad", "YOUSFI", "Mon portrait");
-            author.setId(1);
-            boolean isUpdated = authorModel.update(author);
-            assertTrue(isUpdated);
+    public void test2Find() throws IOException, SQLException, ClassNotFoundException {
 
-        } catch (ClassNotFoundException | IOException | SQLException e) {
-        }
-
+        AuthorModel authorModel = new AuthorModel();
+        Author author = authorModel.find(1);
+        assertNotNull(author);
     }
 
     @Ignore
     @Test
-    public void test4FindAll() {
-        try {
-            //Find All
-            AuthorModel authorModel = new AuthorModel();
-            List<Author> authors = authorModel.findAll();
-            assertNotNull(authors);
-        } catch (ClassNotFoundException | IOException | SQLException e) {
-        }
+    public void test3Update() throws IOException, SQLException, ClassNotFoundException {
+        AuthorModel authorModel = new AuthorModel();
+        Author author = new Author("Riad", "YOUSFI", "Mon portrait");
+        author.setId(1);
+        authorModel.update(author);
     }
 
     @Ignore
     @Test
-    public void test5Delete() {
-        try {
-            //Delete
-            AuthorModel authorModel = new AuthorModel();
-            Author author = new Author();
-            author.setId(1);
-            boolean isDeleted = authorModel.delete(author);
-            assertTrue(isDeleted);
+    public void test4FindAll() throws IOException, SQLException, ClassNotFoundException {
+        AuthorModel authorModel = new AuthorModel();
+        List<Author> authors = authorModel.findAll();
+        assertNotNull(authors);
+    }
 
-        } catch (ClassNotFoundException | IOException | SQLException e) {
-        }
-
+    @Ignore
+    @Test
+    public void test5Delete() throws IOException, SQLException, ClassNotFoundException {
+        AuthorModel authorModel = new AuthorModel();
+        authorModel.delete(1);
     }
 
 }

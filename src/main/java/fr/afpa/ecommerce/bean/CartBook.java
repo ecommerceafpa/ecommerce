@@ -5,16 +5,16 @@ import java.sql.Date;
 
 public class CartBook implements Serializable{
     
-    private int id;
-    private int cartId;
-    private int bookId;
-    private int quantity;
+    private Integer id;
+    private Integer cartId;
+    private Integer bookId;
+    private Integer quantity;
     private Date dateAdd;
 
     public CartBook() {
     }
 
-    public CartBook(int id, int cartId, int bookId, int quantity, Date dateAdd) {
+    public CartBook(Integer id, Integer cartId, Integer bookId, Integer quantity, Date dateAdd) {
         this.id = id;
         this.cartId = cartId;
         this.bookId = bookId;
@@ -22,35 +22,35 @@ public class CartBook implements Serializable{
         this.dateAdd = dateAdd;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getCartId() {
+    public Integer getCartId() {
         return cartId;
     }
 
-    public void setCartId(int cartId) {
+    public void setCartId(Integer cartId) {
         this.cartId = cartId;
     }
 
-    public int getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

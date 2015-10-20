@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
@@ -30,7 +29,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group ${errors['isbn'] != null ? 'has-error':''}">
                                         <label for="isbn">ISBN *</label>
-                                        <input class="form-control" placeholder="ISBN" id="isbn" name="isbn" value="${book.isbn}">
+                                        <input class="form-control" placeholder="ISBN" id="isbn" name="isbn" value="${book.isbn}" maxlength="13">
                                         <p class="help-block">${errors['isbn']}</p>
                                     </div>
 
@@ -47,7 +46,7 @@
                                     </div>                                      
 
                                     <div class="form-group">
-                                        <label for="editorId">Editeur </label>
+                                        <label for="editorId">Editeur *</label>
                                         <select id="editorId" name="editorId" class="form-control">
                                             <c:forEach var="e" items="${editors}">
                                                 <option value="${e.id}" ${e.id == book.editorId ? "selected" : ""}>${e.name}</option>
@@ -56,7 +55,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="languageId">Langue </label>
+                                        <label for="languageId">Langue *</label>
                                         <select id="languageId" name="languageId" class="form-control">
                                             <c:forEach var="l" items="${languages}">
                                                 <option value="${l.id}" ${l.id == book.languageId ? "selected" : ""}>${l.name}</option>
@@ -64,9 +63,9 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group" >
-                                        <label for="authorId">Auteur(s) </label>
-                                        <select id="authorId" name="authorId" class="form-control" multiple="multiple">
+                                    <div class="form-group ${errors['authorIds'] != null ? 'has-error':''}" >
+                                        <label for="authorIds">Auteur(s) *</label>
+                                        <select id="authorIds" name="authorIds" class="form-control" multiple="multiple">
                                             <c:forEach var="a" items="${authors}">
                                                 <c:forEach var="bookAuthor" items="${bookAuthors}">
                                                     <c:if test="${a.id == bookAuthor.authorId}">
@@ -77,6 +76,7 @@
                                                 <c:set var="isSelected" value="${false}"/>
                                             </c:forEach>
                                         </select>
+                                        <p class="help-block">${errors['authorIds']}</p>
                                     </div>
 
                                 </div>
@@ -84,25 +84,25 @@
                                 <div class="col-lg-6">
 
                                     <div class="form-group ${errors['releaseDate'] != null ? 'has-error':''}">
-                                        <label for="releaseDate">Date de sortie *</label>
+                                        <label for="releaseDate">Date de parution *</label>
                                         <input class="form-control" placeholder="dd/MM/yyyy" id="releaseDate" name="releaseDate" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${book.releaseDate}"/>">
                                         <p class="help-block">${errors['releaseDate']}</p>
                                     </div>
 
                                     <div class="form-group ${errors['nbPage'] != null ? 'has-error':''}">
-                                        <label for="nbPage">Nombre de page </label>
+                                        <label for="nbPage">Nombre de page *</label>
                                         <input class="form-control"  placeholder="Nombre de page " id="nbPage" name="nbPage" value="${book.nbPage}">
                                         <p class="help-block">${errors['nbPage']}</p>
                                     </div>  
 
                                     <div class="form-group ${errors['edition'] != null ? 'has-error':''}">
-                                        <label for="edition">Edition </label>
+                                        <label for="edition">Edition *</label>
                                         <input class="form-control"  placeholder="Edition " id="edition" name="edition" value="${book.edition}">
                                         <p class="help-block">${errors['edition']}</p>
                                     </div>  
 
                                     <div class="form-group">
-                                        <label for="taxId">Tax </label>
+                                        <label for="taxId">Tax *</label>
                                         <select id="taxId" name="taxId" class="form-control">
                                             <c:forEach var="t" items="${taxes}">
                                                 <option value="${t.id}" ${t.id == book.taxId ? "selected" : ""}>${t.name}</option>
@@ -111,14 +111,14 @@
                                     </div>
 
                                     <div class="form-group ${errors['price'] != null ? 'has-error':''}">
-                                        <label for="price">Prix </label>
+                                        <label for="price">Prix *</label>
                                         <input class="form-control"  placeholder="Prix " id="price" name="price" value="${book.price}">
                                         <p class="help-block">${errors['price']}</p>
                                     </div>  
 
-                                    <div class="form-group" >
-                                        <label for="categoryId">Categories(s) </label>
-                                        <select id="categoryId" name="categoryId" class="form-control" multiple="multiple">
+                                    <div class="form-group ${errors['categoryIds'] != null ? 'has-error':''}" >
+                                        <label for="categoryIds">Categories(s) *</label>
+                                        <select id="categoryIds" name="categoryIds" class="form-control" multiple="multiple">
                                             <c:forEach var="c" items="${categories}">
                                                 <c:forEach var="bookCategory" items="${bookCategories}">
                                                     <c:if test="${c.id == bookCategory.categoryId}">
@@ -129,12 +129,13 @@
                                                 <c:set var="isSelected" value="${false}"/>
                                             </c:forEach>
                                         </select>
+                                        <p class="help-block">${errors['categoryIds']}</p>
                                     </div>
 
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group ${errors['summary'] != null ? 'has-error':''}">
-                                        <label for="summary">RÃ©sumÃ© </label>
+                                        <label for="summary">Résumé </label>
                                         <textarea class="form-control" rows="5" id="summary" name="summary" >${book.summary}</textarea>
                                         <p class="help-block">${errors['summary']}</p>
                                     </div>

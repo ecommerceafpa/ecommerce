@@ -5,6 +5,7 @@
  */
 package fr.afpa.ecommerce.util;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,17 +38,28 @@ public class Validator {
 
     }
 
-    public static Double numberDouble(String value, boolean isRequired) throws Exception {
+    public static BigDecimal decimal(String value, boolean isRequired) throws Exception {
         if (isRequired) {
             required(value);
         }
 
         try {
-            return Double.parseDouble(value);
+            return BigDecimal.valueOf(Double.parseDouble(value));
         } catch (NumberFormatException e) {
             throw new Exception("Veuillez fournir un numéro valide.");
         }
+    }
 
+    public static Integer number(String value, boolean isRequired) throws Exception {
+        if (isRequired) {
+            required(value);
+        }
+
+        try {
+            return Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            throw new Exception("Veuillez fournir un numéro valide.");
+        }
     }
 
     public static Date date(String value, String pattern, boolean isRequired) throws Exception {
@@ -69,6 +81,50 @@ public class Validator {
         if (!date1.equals(date2) && !date1.before(date2)) {
             throw new Exception("Date de début est après la date de fin");
         }
+    }
+
+    public static Long isbn(String value, boolean isRequired) throws Exception {
+        if (isRequired) {
+            required(value);
+        }
+
+        if (value.length() == 13) {
+            try {
+                return Long.valueOf(value);
+            } catch (NumberFormatException e) {
+                throw new Exception("Veuillez fournir un numéro isbn valide.");
+            }
+        } else {
+            throw new Exception("Veuillez fournir un numéro isbn valide.");
+        }
+    }
+
+    public static void requiredList(String[] values) throws Exception {
+
+        if (values == null || values.length == 0) {
+            throw new Exception("Ce champ est obligatoire.");
+        }
+
+    }
+
+    public static Integer[] integerList(String[] values, boolean isRequired) throws Exception {
+
+        if (isRequired) {
+            requiredList(values);
+        }
+
+        Integer[] intValues = new Integer[values.length];
+
+        try {
+            for (int i = 0; i < values.length; i++) {
+                intValues[i] = Integer.parseInt(values[i]);
+            }
+        } catch (NumberFormatException e) {
+            throw new Exception("Veuillez fournir une liste valide.");
+        }
+
+        return intValues;
+
     }
 
 }

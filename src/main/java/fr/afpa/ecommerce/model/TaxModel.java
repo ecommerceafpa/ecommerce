@@ -1,10 +1,8 @@
 package fr.afpa.ecommerce.model;
 
 import fr.afpa.ecommerce.bean.Tax;
-import fr.afpa.ecommerce.bean.Tax;
 import fr.afpa.ecommerce.jdbc.ConnectionFactory;
 import fr.afpa.ecommerce.jdbc.ConnectionUtil;
-import fr.afpa.ecommerce.model.Crud;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,24 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaxModel implements Crud<Tax> {
-    
-    @Override
-    public Tax save(Tax tax) throws IOException, SQLException, ClassNotFoundException {
 
-        String req = "INSERT INTO tax (name, value) VALUES (?, ?);";
+    @Override
+    public Integer save(Tax tax) throws IOException, SQLException, ClassNotFoundException {
+
+        String req = "INSERT INTO tax (name, value) VALUES (?, ?)";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
         pstm.setString(1, tax.getName());
         pstm.setBigDecimal(2, tax.getValue());
 
-        int rows = pstm.executeUpdate();
-        if (rows == 0) {
+        if (pstm.executeUpdate() == 0) {
             throw new SQLException();
         }
 
+        Integer id = null;
         try (ResultSet rs = pstm.getGeneratedKeys()) {
             if (rs.next()) {
-                tax.setId(rs.getInt("id"));
+                id = rs.getInt(1);
             }
             ConnectionUtil.close(rs);
         }
@@ -40,14 +38,15 @@ public class TaxModel implements Crud<Tax> {
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
 
-        return tax;
+        return id;
     }
 
     @Override
-    public Tax find(int id) throws IOException, SQLException, ClassNotFoundException {
+    public Tax find(Integer id) throws IOException, SQLException, ClassNotFoundException {
+
         Tax tax = null;
 
-        String req = "SELECT id, name, value FROM tax WHERE deleted = false AND id=?;";
+        String req = "SELECT id, name, value FROM tax WHERE deleted = false AND id = ?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setInt(1, id);
@@ -58,7 +57,7 @@ public class TaxModel implements Crud<Tax> {
             tax = new Tax();
             tax.setId(rs.getInt("id"));
             tax.setName(rs.getString("name"));
-            tax.setValue(rs.getBigDecimal("value"));            
+            tax.setValue(rs.getBigDecimal("value"));
         }
 
         ConnectionUtil.close(rs);
@@ -70,8 +69,11 @@ public class TaxModel implements Crud<Tax> {
 
     @Override
     public List<Tax> findAll() throws IOException, SQLException, ClassNotFoundException {
+
         List<Tax> taxs = new ArrayList<>();
-        String req = "SELECT id,name,value FROM tax WHERE deleted = false;";
+
+        String req = "SELECT id, name, value, created, updated FROM tax WHERE deleted = false";
+
         Connection cnt = ConnectionFactory.getConnection();
         Statement stm = cnt.prepareStatement(req);
         ResultSet rs = stm.executeQuery(req);
@@ -80,7 +82,9 @@ public class TaxModel implements Crud<Tax> {
             Tax tax = new Tax();
             tax.setId(rs.getInt("id"));
             tax.setName(rs.getString("name"));
-            tax.setValue(rs.getBigDecimal("value"));            
+            tax.setValue(rs.getBigDecimal("value"));
+            tax.setCreated(rs.getTimestamp("created"));
+            tax.setUpdated(rs.getTimestamp("updated"));
             taxs.add(tax);
         }
 
@@ -92,37 +96,39 @@ public class TaxModel implements Crud<Tax> {
     }
 
     @Override
-    public boolean update(Tax tax) throws IOException, SQLException, ClassNotFoundException {
+    public void update(Tax tax) throws IOException, SQLException, ClassNotFoundException {
 
-        String req = "UPDATE tax SET name=?, value=? WHERE id=?;";
+        String req = "UPDATE tax SET name = ?, value = ? WHERE id = ?";
+
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setString(1, tax.getName());
-        pstm.setBigDecimal(2, tax.getValue());        
+        pstm.setBigDecimal(2, tax.getValue());
         pstm.setInt(3, tax.getId());
 
-        int exe = pstm.executeUpdate();
+        if (pstm.executeUpdate() == 0) {
+            throw new SQLException();
+        }
 
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
-
-        return exe > 0;
     }
 
     @Override
-    public boolean delete(Tax tax) throws IOException, SQLException, ClassNotFoundException {
-        String req = "UPDATE tax SET deleted=1 WHERE id=?;";
+    public void delete(Integer id) throws IOException, SQLException, ClassNotFoundException {
+
+        String req = "UPDATE tax SET deleted = 1 WHERE id = ?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
-        pstm.setInt(1, tax.getId());
+        pstm.setInt(1, id);
 
-        int exe = pstm.executeUpdate();
+        if (pstm.executeUpdate() == 0) {
+            throw new SQLException();
+        }
 
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
 
-        return exe > 0;
     }
 
-    
 }

@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class Category extends CommonTable implements Serializable {
 
     private String name;
-    private int parentCategoryId;
+    private String parent;
+    private Integer parentCategoryId;
 
     public Category() {
     }
@@ -14,17 +15,24 @@ public class Category extends CommonTable implements Serializable {
         this.name = name;
     }
 
-    public Category(int id, String name) {
+    public Category(Integer id, String name) {
         super(id);
         this.name = name;
     }
 
-    public Category(String name, int parentCategoryId) {
+    public Category(Integer id, String name, String parent, Integer parentCategoryId) {
+        super(id);
+        this.name = name;
+        this.parent = parent;
+        this.parentCategoryId = parentCategoryId;
+    }
+
+    public Category(String name, Integer parentCategoryId) {
         this.name = name;
         this.parentCategoryId = parentCategoryId;
     }
 
-    public Category(int id, String name, int parentCategoryId) {
+    public Category(Integer id, String name, Integer parentCategoryId) {
         super(id);
         this.name = name;
         this.parentCategoryId = parentCategoryId;
@@ -38,12 +46,20 @@ public class Category extends CommonTable implements Serializable {
         this.name = name;
     }
 
-    public int getParentCategoryId() {
+    public Integer getParentCategoryId() {
         return parentCategoryId;
     }
 
-    public void setParentCategoryId(int parentCategoryId) {
+    public void setParentCategoryId(Integer parentCategoryId) {
         this.parentCategoryId = parentCategoryId;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
     @Override

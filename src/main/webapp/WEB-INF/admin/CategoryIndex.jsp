@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -30,6 +30,9 @@
                                 <thead>
                                     <tr>
                                         <th>Nom</th>
+                                        <th>Parent</th>
+                                        <th>Crée le</th>
+                                        <th>Modifié le</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -37,9 +40,12 @@
                                     <c:forEach var="category" items="${categories}">
                                         <tr class="odd gradeX">
                                             <td>${category.name}</td>
+                                            <td>${category.parent}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${category.created}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${category.updated}" /></td>
                                             <td>
                                                 <a href="Category?action=edit&id=${category.id}" class="btn btn-default btn-circle"><i class="fa fa-edit"></i></a>
-                                                <a href="Category?action=delete&id=${category.id}" class="btn btn-default btn-circle" onclick="return confirm('Ãªtes-vous sÃ»r de vouloir supprimer ${category.name} ?');"><i class="fa fa-trash"></i></a>
+                                                <a href="Category?action=delete&id=${category.id}" class="btn btn-default btn-circle" onclick="return confirm('êtes-vous sûr de vouloir supprimer ${category.name} ?');"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>

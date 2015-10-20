@@ -5,7 +5,6 @@ import fr.afpa.ecommerce.jdbc.ConnectionFactory;
 import fr.afpa.ecommerce.jdbc.ConnectionUtil;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +15,9 @@ import java.util.List;
 public class CustomerModel implements Crud<Customer> {
 
     @Override
-    public Customer save(Customer customer) throws IOException, SQLException, ClassNotFoundException {
+    public Integer save(Customer customer) throws IOException, SQLException, ClassNotFoundException {
 
-        String req = "INSERT INTO customer (firstname, lastname, username, password) VALUES (?, ?, ?, ?);";
+        String req = "INSERT INTO customer (firstname, lastname, username, password) VALUES (?, ?, ?, ?)";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setString(1, customer.getFirstName());
@@ -27,13 +26,15 @@ public class CustomerModel implements Crud<Customer> {
         pstm.setString(4, customer.getPassword());
 
         int rows = pstm.executeUpdate();
+
         if (rows == 0) {
             throw new SQLException();
         }
 
+        Integer id = null;
         try (ResultSet rs = pstm.getGeneratedKeys()) {
             if (rs.next()) {
-                customer.setId(rs.getInt("id"));
+                id = rs.getInt(1);
             }
             ConnectionUtil.close(rs);
         }
@@ -41,15 +42,15 @@ public class CustomerModel implements Crud<Customer> {
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
 
-        return customer;
+        return id;
     }
 
     @Override
-    public Customer find(int id) throws IOException, SQLException, ClassNotFoundException {
+    public Customer find(Integer id) throws IOException, SQLException, ClassNotFoundException {
 
         Customer customer = null;
 
-        String req = "SELECT id,firstname,lastname,username,created,disabled FROM customer WHERE deleted = false AND id=?;";
+        String req = "SELECT id, firstname, lastname, username, created, disabled FROM customer WHERE deleted = false AND id = ?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setInt(1, id);
@@ -73,10 +74,11 @@ public class CustomerModel implements Crud<Customer> {
         return customer;
     }
 
+    @Override
     public List<Customer> findAll() throws IOException, SQLException, ClassNotFoundException {
 
         List<Customer> customers = new ArrayList<>();
-        String req = "SELECT id,firstname,lastname,username,created,disabled FROM customer WHERE deleted = false;";
+        String req = "SELECT id, firstname, lastname, username, created, disabled FROM customer WHERE deleted = false;";
         Connection cnt = ConnectionFactory.getConnection();
         Statement stm = cnt.prepareStatement(req);
         ResultSet rs = stm.executeQuery(req);
@@ -99,9 +101,10 @@ public class CustomerModel implements Crud<Customer> {
         return customers;
     }
 
-    public boolean update(Customer customer) throws IOException, SQLException, ClassNotFoundException {
+    @Override
+    public void update(Customer customer) throws IOException, SQLException, ClassNotFoundException {
 
-        String req = "UPDATE customer SET firstname=?, lastname=?, username=?, password=? WHERE id=?;";
+        String req = "UPDATE customer SET firstname = ?, lastname = ?, username = ?, password = ? WHERE id = ?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setString(1, customer.getFirstName());
@@ -110,42 +113,44 @@ public class CustomerModel implements Crud<Customer> {
         pstm.setString(4, customer.getPassword());
         pstm.setInt(5, customer.getId());
 
-        int exe = pstm.executeUpdate();
+        if (pstm.executeUpdate() == 0) {
+            throw new SQLException();
+        }
 
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
-
-        return exe > 0;
     }
 
-    public boolean delete(Customer customer) throws IOException, SQLException, ClassNotFoundException {
+    @Override
+    public void delete(Integer id) throws IOException, SQLException, ClassNotFoundException {
 
         String req = "UPDATE customer SET deleted=1 WHERE id=?;";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
-        pstm.setInt(1, customer.getId());
+        pstm.setInt(1, id);
 
-        int exe = pstm.executeUpdate();
+        if (pstm.executeUpdate() == 0) {
+            throw new SQLException();
+        }
 
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
-
-        return exe > 0;
     }
 
-    public boolean disable(int id, boolean enable) throws IOException, SQLException, ClassNotFoundException {
+    public void disable(int id, boolean enable) throws IOException, SQLException, ClassNotFoundException {
 
-        String req = "UPDATE customer SET disabled=? WHERE id=?;";
+        String req = "UPDATE customer SET disabled = ? WHERE id = ?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setBoolean(1, enable);
         pstm.setInt(2, id);
 
-         int exe =pstm.executeUpdate();
+        if (pstm.executeUpdate() == 0) {
+            throw new SQLException();
+        }
 
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
-        return exe > 0;
     }
 
 }

@@ -1,60 +1,65 @@
 package fr.afpa.ecommerce.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.Date;
 
 public class Book extends CommonTable implements Serializable {
 
-    private int editorId;
-    private int languageId;
-    private int taxId;
-    private long isbn;
+    private Integer editorId;
+    private Integer languageId;
+    private Integer taxId;
+    private Long isbn;
     private Blob image;
     private String title;
     private String subtitle;
     private String summary;
-    private int nbPage;
+    private Integer nbPage;
     private Date releaseDate;
-    private int edition;
-    private double price;
+    private Integer edition;
+    private BigDecimal price;
+    private String editorName;
+    private String languageName;
+    private Integer[] authorIds;
+    private Integer[] categoryIds;
 
     public Book() {
     }
 
-    public Book(int id) {
+    public Book(Integer id) {
         super(id);
     }
 
-    public int getEditorId() {
+    public Integer getEditorId() {
         return editorId;
     }
 
-    public void setEditorId(int editorId) {
+    public void setEditorId(Integer editorId) {
         this.editorId = editorId;
     }
 
-    public int getLanguageId() {
+    public Integer getLanguageId() {
         return languageId;
     }
 
-    public void setLanguageId(int languageId) {
+    public void setLanguageId(Integer languageId) {
         this.languageId = languageId;
     }
 
-    public int getTaxId() {
+    public Integer getTaxId() {
         return taxId;
     }
 
-    public void setTaxId(int taxId) {
+    public void setTaxId(Integer taxId) {
         this.taxId = taxId;
     }
 
-    public long getIsbn() {
+    public Long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(long isbn) {
+    public void setIsbn(Long isbn) {
         this.isbn = isbn;
     }
 
@@ -90,11 +95,11 @@ public class Book extends CommonTable implements Serializable {
         this.summary = summary;
     }
 
-    public int getNbPage() {
+    public Integer getNbPage() {
         return nbPage;
     }
 
-    public void setNbPage(int nbPage) {
+    public void setNbPage(Integer nbPage) {
         this.nbPage = nbPage;
     }
 
@@ -106,20 +111,52 @@ public class Book extends CommonTable implements Serializable {
         this.releaseDate = releaseDate;
     }
 
-    public int getEdition() {
+    public Integer getEdition() {
         return edition;
     }
 
-    public void setEdition(int edition) {
+    public void setEdition(Integer edition) {
         this.edition = edition;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getEditorName() {
+        return editorName;
+    }
+
+    public void setEditorName(String editorName) {
+        this.editorName = editorName;
+    }
+
+    public String getLanguageName() {
+        return languageName;
+    }
+
+    public void setLanguageName(String languageName) {
+        this.languageName = languageName;
+    }
+
+    public Integer[] getAuthorIds() {
+        return authorIds;
+    }
+
+    public void setAuthorIds(Integer[] authorIds) {
+        this.authorIds = authorIds;
+    }
+
+    public Integer[] getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(Integer[] categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
 }

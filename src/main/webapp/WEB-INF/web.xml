@@ -6,6 +6,12 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>WEB-INF/default/Index.jsp</welcome-file>
     </welcome-file-list>
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>ISO-8859-1</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

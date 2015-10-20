@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -38,7 +37,7 @@
                                     
                                     <div class="form-group ${errors['value'] != null ? 'has-error':''}">
                                         <label for="value">Valeur *</label>
-                                        <input class="form-control" placeholder="Nom" id="value" name="value" value="${tax.value}">
+                                        <input class="form-control" placeholder="Valeur" id="value" name="value" value="${tax.value}">
                                         <p class="help-block">${errors['value']}</p>
                                     </div>
 

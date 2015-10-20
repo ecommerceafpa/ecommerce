@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Addressee extends CommonTable implements Serializable{
     
-    private int customerId;
+    private Integer customerId;
     private String firstName;
     private String lastName;
     private String address;
@@ -17,7 +17,7 @@ public class Addressee extends CommonTable implements Serializable{
     public Addressee() {
     }
 
-    public Addressee(int customerId, String firstName, String lastName, String address, String zipCode, String city, String country, String phone, String email) {
+    public Addressee(Integer customerId, String firstName, String lastName, String address, String zipCode, String city, String country, String phone, String email) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,11 +29,11 @@ public class Addressee extends CommonTable implements Serializable{
         this.email = email;
     }
 
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 

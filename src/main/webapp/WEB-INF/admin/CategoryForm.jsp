@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -37,7 +36,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="parentCategory">Catégorie parente</label>
+                                        <label for="parentCategory">Categorie parente</label>
                                         <select id="parentCategory" name="parent_category_id" class="form-control">
                                             <option value=""></option>
                                             <c:forEach var="c" items="${categories}">

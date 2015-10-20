@@ -8,7 +8,7 @@ public class Customer extends CommonTable implements Serializable {
     private String lastName;
     private String userName;
     private String password;
-    private boolean disabled;
+    private Boolean disabled;
 
     public Customer() {
     }    
@@ -52,11 +52,11 @@ public class Customer extends CommonTable implements Serializable {
         this.password = password;
     }
 
-    public boolean isDisabled() {
+    public Boolean isDisabled() {
         return disabled;
     }
 
-    public void setDisabled(boolean disabled) {
+    public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
     }
 

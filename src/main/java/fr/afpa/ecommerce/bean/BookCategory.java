@@ -4,40 +4,40 @@ import java.io.Serializable;
 
 public class BookCategory implements Serializable{
     
-    private int id;
-    private int bookId;
-    private int categoryId;
+    private Integer id;
+    private Integer bookId;
+    private Integer categoryId;
 
     public BookCategory() {
     }
 
-    public BookCategory(int id, int bookId, int categoryId) {
+    public BookCategory(Integer id, Integer bookId, Integer categoryId) {
         this.id = id;
         this.bookId = bookId;
         this.categoryId = categoryId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
-    public int getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
     

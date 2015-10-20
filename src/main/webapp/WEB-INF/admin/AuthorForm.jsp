@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -35,13 +34,13 @@
                                         <p class="help-block">${errors['firstNameError']}</p>
                                     </div>
                                     <div class="form-group ${errors['lastNameError'] != null ? 'has-error':''}">
-                                        <label for="lastName">PrÃ©nom *</label>
-                                        <input class="form-control"  placeholder="PrÃ©nom" id="lastName" name="lastName" value="${author.lastName}">
+                                        <label for="lastName">Prénom *</label>
+                                        <input class="form-control"  placeholder="Prénom" id="lastName" name="lastName" value="${author.lastName}">
                                         <p class="help-block">${errors['lastNameError']}</p>
                                     </div>
                                     <div class="form-group ${errors['portraitError'] != null ? 'has-error':''}">
                                         <label for="portrait">Portrait *</label>
-                                        <textarea class="form-control" rows="3" id="portrait" name="portrait" >${author.portrait}</textarea>
+                                        <textarea class="form-control" rows="10" id="portrait" name="portrait" >${author.portrait}</textarea>
                                         <p class="help-block">${errors['portraitError']}</p>
                                     </div>
                                     <input type="hidden" name="id" value="${author.id}">

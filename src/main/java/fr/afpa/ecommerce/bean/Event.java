@@ -8,6 +8,7 @@ public class Event extends CommonTable implements Serializable {
     private String name;
     private Date startDate;
     private Date endDate;
+    private Integer[] bookIds;
 
     public Event() {
     }
@@ -51,6 +52,14 @@ public class Event extends CommonTable implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer[] getBookIds() {
+        return bookIds;
+    }
+
+    public void setBookIds(Integer[] bookIds) {
+        this.bookIds = bookIds;
     }
 
 }

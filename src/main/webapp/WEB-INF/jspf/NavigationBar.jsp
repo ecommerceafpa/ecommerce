@@ -1,9 +1,10 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=ISO-8859-1"%>
+<%@ page pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <META http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
@@ -58,9 +59,9 @@
                             <li><a href="Author"><i class="fa fa-users fa-fw"></i> Gestion des auteurs</a></li>
                             <li><a href="Category"><i class="fa fa-sitemap fa-fw"></i> Gestion des categories</a></li>
                             <li><a href="Editor"><i class="fa fa-pencil fa-fw"></i> Gestion des editeurs</a></li>
-                            <li><a href="Event"><i class="fa fa-calendar fa-fw"></i> Gestion des Ã©vÃ©nements</a></li>
-                            <li><a href="Customer"><i class="fa fa-user fa-fw"></i> Gestion des clients</a></li>
+                            <li><a href="Event"><i class="fa fa-calendar fa-fw"></i> Gestion des événements</a></li>
                             <li><a href="Tax"><i class="fa fa-money fa-fw"></i> Gestion des taxes</a></li>
+                            <li><a href="Customer"><i class="fa fa-user fa-fw"></i> Gestion des clients</a></li>
                         </ul>
                     </div>
                 </div>

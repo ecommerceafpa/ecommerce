@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
@@ -38,7 +37,7 @@
                                     </div>
 
                                     <div class="form-group ${errors['startDate'] != null ? 'has-error':''}">
-                                        <label for="startDate">Date de dÃ©but *</label>
+                                        <label for="startDate">Date de début *</label>
                                         <input class="form-control" placeholder="dd/MM/yyyy" id="startDate" name="startDate" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${event.startDate}"/>">
                                         <p class="help-block">${errors['startDate']}</p>
                                     </div>
@@ -47,6 +46,22 @@
                                         <label for="endDate">Date de fin *</label>
                                         <input class="form-control" placeholder="dd/MM/yyyy" id="endDate" name="endDate" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${event.endDate}"/>">
                                         <p class="help-block">${errors['endDate']}</p>
+                                    </div>
+
+                                    <div class="form-group ${errors['bookIds'] != null ? 'has-error':''}" >
+                                        <label for="bookIds">Livre(s) *</label>
+                                        <select id="bookIds" name="bookIds" class="form-control" multiple="multiple">
+                                            <c:forEach var="b" items="${books}">
+                                                <c:forEach var="bookEvent" items="${bookEvents}">
+                                                    <c:if test="${b.id == bookEvent.bookId}">
+                                                        <c:set var="isSelected" value="${true}"/>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <option value="${b.id}" ${isSelected ? "selected" : "" }>${b.title}</option>
+                                                <c:set var="isSelected" value="${false}"/>
+                                            </c:forEach>
+                                        </select>
+                                        <p class="help-block">${errors['bookIds']}</p>
                                     </div>
 
                                     <input type="hidden" name="id" value="${event.id}">

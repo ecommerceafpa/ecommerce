@@ -5,23 +5,23 @@ import java.util.Date;
 
 public class CommonTable implements Serializable {
 
-    protected int id;
+    protected Integer id;
     protected Date created;
     protected Date updated;
-    protected boolean deleted;
+    protected Boolean deleted;
 
     public CommonTable() {
     }
 
-    public CommonTable(int id) {
+    public CommonTable(Integer id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -41,11 +41,11 @@ public class CommonTable implements Serializable {
         this.updated = updated;
     }
 
-    public boolean isDeleted() {
+    public Boolean isDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 

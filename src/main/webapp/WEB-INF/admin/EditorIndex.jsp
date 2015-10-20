@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../jspf/NavigationBar.jsp" %>
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -30,6 +30,8 @@
                                 <thead>
                                     <tr>
                                         <th>Nom</th>
+                                        <th>Crée le</th>
+                                        <th>Modifié le</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -37,9 +39,11 @@
                                     <c:forEach var="editor" items="${editors}">
                                         <tr class="odd gradeX">
                                             <td>${editor.name}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${editor.created}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${editor.updated}" /></td>
                                             <td>
                                                 <a href="Editor?action=edit&id=${editor.id}" class="btn btn-default btn-circle"><i class="fa fa-edit"></i></a>
-                                                <a href="Editor?action=delete&id=${editor.id}" class="btn btn-default btn-circle" onclick="return confirm('Ãªtes-vous sÃ»r de vouloir supprimer ${editor.name} ?');"><i class="fa fa-trash"></i></a>
+                                                <a href="Editor?action=delete&id=${editor.id}" class="btn btn-default btn-circle" onclick="return confirm('êtes-vous sûr de vouloir supprimer ${editor.name} ?');"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>

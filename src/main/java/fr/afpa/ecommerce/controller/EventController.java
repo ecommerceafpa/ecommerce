@@ -1,12 +1,14 @@
 package fr.afpa.ecommerce.controller;
 
 import fr.afpa.ecommerce.bean.Event;
+import fr.afpa.ecommerce.model.BookModel;
+import fr.afpa.ecommerce.model.EventModel;
 import fr.afpa.ecommerce.util.Alert;
 import fr.afpa.ecommerce.util.AlertStyle;
 import fr.afpa.ecommerce.util.Validator;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,56 +20,69 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @event Riad YOUSFI
+ * @author Riad YOUSFI
  */
 @WebServlet(name = "EventController", urlPatterns = {"/Admin/Event"})
 public class EventController extends HttpServlet {
 
     private final String eventForm = "/WEB-INF/admin/EventForm.jsp";
     private final String eventIndex = "/WEB-INF/admin/EventIndex.jsp";
+    private EventModel eventModel;
+    private BookModel bookModel;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        eventModel = new EventModel();
+        bookModel = new BookModel();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
 
-        String action = request.getParameter("action");
+            String action = request.getParameter("action");
 
-        if (action == null) {
-            action = "index";
-        }
+            if (action == null) {
+                action = "index";
+            }
 
-        switch (action) {
-            case "add":
-                request.getRequestDispatcher(eventForm).forward(request, response);
-                break;
-            case "edit":
-                try {
-                    int id = Integer.parseInt(request.getParameter("id"));
-
-                    Calendar startDate = Calendar.getInstance();
-                    startDate.set(15, 8, 1);
-
-                    Calendar endDate = Calendar.getInstance();
-                    endDate.set(2015, 9, 30);
-
-                    //FindById Event from database
-                    Event event = new Event(1, "Objectif Web", new java.sql.Date(115, 9, 1), new java.sql.Date(115, 9, 30));
-                    request.setAttribute("event", event);
+            switch (action) {
+                case "add":
+                    request.setAttribute("books", bookModel.findAll());
                     request.getRequestDispatcher(eventForm).forward(request, response);
-                } catch (NumberFormatException e) {
-                    Alert alert = new Alert(AlertStyle.DANGER, "La evente que vous recherchez n'existe pas");
-                    request.setAttribute("alert", alert);
-                    goIndex(request, response);
-                }
-                break;
-            case "delete":
-                //Delete Event from database
-                request.setAttribute("alert", new Alert("Evente supprimé avec succes"));
-                goIndex(request, response);
-                break;
-            case "index":
-                goIndex(request, response);
-                break;
+                    break;
+                case "edit":
+                    try {
+                        Integer id = Integer.parseInt(request.getParameter("id"));
 
+                        Event event = eventModel.find(id);
+                        if (event != null) {
+                            request.setAttribute("bookEvents", eventModel.findBooks(id));
+                            request.setAttribute("books", bookModel.findAll());
+                            request.setAttribute("event", event);
+                            request.getRequestDispatcher(eventForm).forward(request, response);
+
+                        } else {
+                            goIndex(request, response, new Alert(AlertStyle.DANGER, "La evente que vous recherchez n'existe pas"));
+                        }
+                    } catch (NumberFormatException e) {
+                        goIndex(request, response, new Alert(AlertStyle.DANGER, "La evente que vous recherchez n'existe pas"));
+                    }
+                    break;
+                case "delete":
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    eventModel.delete(id);
+                    goIndex(request, response, new Alert("Evente supprimé avec succes"));
+                    break;
+                case "index":
+                    goIndex(request, response, null);
+                    break;
+
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            goIndex(request, response, new Alert(AlertStyle.DANGER, "Une erreur inattendue s'est produite."));
         }
 
     }
@@ -77,19 +92,19 @@ public class EventController extends HttpServlet {
 
         Map<String, String> errors = new HashMap<>();
 
+        String[] bookIds = request.getParameterValues("bookIds");
         String name = request.getParameter("name").trim();
         String startDate = request.getParameter("startDate").trim();
         String endDate = request.getParameter("endDate").trim();
 
-        int id;
+        Event event = new Event();
+        Integer id = null;
 
         try {
             id = Integer.parseInt(request.getParameter("id"));
+            event.setId(id);
         } catch (NumberFormatException e) {
-            id = 0;
         }
-
-        Event event = new Event();
 
         try {
             Validator.required(name);
@@ -115,36 +130,57 @@ public class EventController extends HttpServlet {
             errors.put("endDate", e.getMessage());
         }
 
-        if (!errors.isEmpty()) {
-            request.setAttribute("event", event);
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher(eventForm).forward(request, response);
+        try {
+            event.setBookIds(Validator.integerList(bookIds, true));
+        } catch (Exception e) {
+            errors.put("bookIds", e.getMessage());
+        }
 
-        } else {
-            if (id > 0) {
-                //Update Event from database
-                request.setAttribute("alert", new Alert("Evenement modifié avec succes"));
+        try {
+
+            if (!errors.isEmpty()) {
+                request.setAttribute("event", event);
+                request.setAttribute("books", bookModel.findAll());
+                if (id != null) {
+                    request.setAttribute("bookEvents", eventModel.findBooks(id));
+                }
+                request.setAttribute("errors", errors);
+                request.getRequestDispatcher(eventForm).forward(request, response);
+
             } else {
-                //Insert Event from database
-                request.setAttribute("alert", new Alert("Evenement ajouté avec succes"));
-            }
+                Alert alert;
+                if (id != null) {
+                    eventModel.update(event);
+                    eventModel.addBooks(event);
+                    alert = new Alert("Evenement modifié avec succes");
+                } else {
+                    Integer eventId = eventModel.save(event);
+                    event.setId(eventId);
+                    eventModel.addBooks(event);
+                    alert = new Alert("Evenement ajouté avec succes");
+                }
 
-            goIndex(request, response);
+                goIndex(request, response, alert);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            goIndex(request, response, new Alert(AlertStyle.DANGER, "Une erreur inattendue s'est produite."));
         }
 
     }
 
-    private void goIndex(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Event> events = findAllEvents();
+    private void goIndex(HttpServletRequest request, HttpServletResponse response, Alert alert) throws IOException, ServletException {
+        List<Event> events = new ArrayList<>();
+
+        try {
+            events = eventModel.findAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            request.setAttribute("alert", new Alert(AlertStyle.DANGER, "Une erreur inattendue s'est produite."));
+        }
+
+        request.setAttribute("alert", alert);
         request.setAttribute("events", events);
         request.getRequestDispatcher(eventIndex).forward(request, response);
-    }
-
-    private List<Event> findAllEvents() {
-        //FindAll Event from database
-        List<Event> events = new ArrayList<>();
-        events.add(new Event(1, "Objectif Web", new java.sql.Date(115, 9, 1), new java.sql.Date(115, 9, 30)));
-        return events;
     }
 
 }

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Comment extends CommonTable implements Serializable{
     
-    private int customerId;
-    private int bookId;
+    private Integer customerId;
+    private Integer bookId;
     private String title;
     private String text;
     private byte rate; 
@@ -13,7 +13,7 @@ public class Comment extends CommonTable implements Serializable{
     public Comment() {
     }
 
-    public Comment(int customerId, int bookId, String title, String text, byte rate) {
+    public Comment(Integer customerId, Integer bookId, String title, String text, byte rate) {
         this.customerId = customerId;
         this.bookId = bookId;
         this.title = title;
@@ -21,19 +21,19 @@ public class Comment extends CommonTable implements Serializable{
         this.rate = rate;
     }
 
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
-    public int getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
