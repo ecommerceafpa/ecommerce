@@ -1,5 +1,6 @@
 package fr.afpa.ecommerce.model;
 
+import fr.afpa.ecommerce.bean.Author;
 import fr.afpa.ecommerce.bean.Book;
 import fr.afpa.ecommerce.bean.BookAuthor;
 import fr.afpa.ecommerce.bean.BookCategory;
@@ -342,6 +343,31 @@ public class BookModel implements Crud<Book> {
         ConnectionUtil.close(cnt);
 
         return book;
+    }
+
+    public List<Author> findAuthorsByBook(Integer id) throws SQLException, IOException, ClassNotFoundException {
+        List<Author>authors=new ArrayList();
+        Author author = null;
+        String req = "select a.id, a.firstname, a.lastname from author a join book_author ba on (a.id=ba.author_id) join book b on(b.id=ba.book_id) where b.id=?";
+        Connection cnt = ConnectionFactory.getConnection();
+        PreparedStatement pstm = cnt.prepareStatement(req);
+        pstm.setInt(1, id);
+
+        ResultSet rs = pstm.executeQuery();
+
+        while (rs.next()) {
+            author = new Author(); 
+            author.setId(rs.getInt("id"));
+            author.setFirstName(rs.getString("firstname"));
+            author.setLastName(rs.getString("lastname")); 
+            authors.add(author);
+        }
+
+        ConnectionUtil.close(rs);
+        ConnectionUtil.close(pstm);
+        ConnectionUtil.close(cnt);
+
+        return authors;
     }
 
 }

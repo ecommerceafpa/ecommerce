@@ -133,5 +133,31 @@ public class AuthorModel implements Crud<Author> {
         ConnectionUtil.close(cnt);
 
     }
+    
+    public Author detailAuthor(Integer id) throws SQLException, IOException, ClassNotFoundException {
+
+        Author author = null;
+        String req = "SELECT firstname, lastname, portrait FROM author where id=?";
+        Connection cnt = ConnectionFactory.getConnection();
+        PreparedStatement pstm = cnt.prepareStatement(req);
+        pstm.setInt(1, id);
+
+        ResultSet rs = pstm.executeQuery();
+
+        while (rs.next()) {
+            author = new Author();
+            
+            author.setFirstName(rs.getString("firstName"));
+            author.setLastName(rs.getString("lastName"));           
+            author.setPortrait(rs.getString("portrait"));
+                      
+        }
+
+        ConnectionUtil.close(rs);
+        ConnectionUtil.close(pstm);
+        ConnectionUtil.close(cnt);
+
+        return author;
+    }
 
 }

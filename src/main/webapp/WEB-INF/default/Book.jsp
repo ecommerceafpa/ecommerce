@@ -16,25 +16,32 @@
                 <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                 <div class="caption-full">
                     <h4 class="pull-right">Prix: <fmt:formatNumber type="currency" currencySymbol="&#8364;" value="${book.price}" /></h4><br>     
-                    <h2>${book.title}</h2>
-                    <h3>${book.subtitle}</h3>                    
+                    <h3>${book.title}</h3>
+                    <h4>${book.subtitle}</h4> 
+
+                    <h5 >Auteur(s):  
+                        <c:forEach var="author" items="${authors}">
+                            <a href="Author?id=${author.id}" >${author.firstName}   ${author.lastName} </a>
+                        </c:forEach>
+                    </h5>
+
+                    <h5 >Langue: ${book.languageName} </h5>
+
+
+                    <h5 >Editeur: ${book.editorName} </h5>
+
+
+                    <h5 >Numéro ISBN: ${book.isbn} </h5>
+
+                    <fmt:setLocale value="fr"/>
+                    <h5 >Date d'édition: <fmt:formatDate  pattern="dd MMMM yyyy" value="${book.releaseDate}"  /> </h5>
+
+
+                    <h5 >Nombre de pages: ${book.nbPage} </h5>
+
                     <p>${book.summary}</p>
                 </div>
-                <div class="col-md-12">
-                    <h4 class="pull-left">Langue: ${book.languageName} </h4>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="pull-left">Editeur: ${book.editorName} </h4>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="pull-right">Numéro ISBN: ${book.isbn} </h4>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="pull-left">Date d'édition: <fmt:formatDate pattern="yyyy" value="${book.releaseDate}"  /> </h4>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="pull-right">Nombre de pages: ${book.nbPage} </h4>
-                </div>
+
                 <div class="ratings">
                     <p class="pull-right">3 reviews</p>
                     <p>
