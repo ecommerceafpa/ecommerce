@@ -16,23 +16,25 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "DetailAuthorController", urlPatterns = {"/Author"})
 public class DetailAuthorController extends HttpServlet {
-    
+
     private final String authorPage = "/WEB-INF/default/Author.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Integer id=Integer.parseInt(request.getParameter("id"));
-        AuthorModel authorModel=new AuthorModel();
-        
+
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        AuthorModel authorModel = new AuthorModel();
+        BookModel bookModel = new BookModel();
+
         try {
 
             request.setAttribute("author", authorModel.detailAuthor(id));
-            
+            request.setAttribute("books", bookModel.findBooksByAuthor(id));
+
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DetailBookController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
         request.getRequestDispatcher(authorPage).forward(request, response);
     }
 

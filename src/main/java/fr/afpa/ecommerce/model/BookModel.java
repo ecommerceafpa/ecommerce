@@ -16,10 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Riad YOUSFI
- */
+
 public class BookModel implements Crud<Book> {
 
     @Override
@@ -307,6 +304,8 @@ public class BookModel implements Crud<Book> {
 
         return books;
     }
+    
+    
 
     public Book detailBook(Integer id) throws SQLException, IOException, ClassNotFoundException {
 
@@ -345,10 +344,15 @@ public class BookModel implements Crud<Book> {
         return book;
     }
 
-    public List<Author> findAuthorsByBook(Integer id) throws SQLException, IOException, ClassNotFoundException {
-        List<Author>authors=new ArrayList();
-        Author author = null;
-        String req = "select a.id, a.firstname, a.lastname from author a join book_author ba on (a.id=ba.author_id) join book b on(b.id=ba.book_id) where b.id=?";
+    public List<Book> findBooksByAuthor(Integer id) throws SQLException, IOException, ClassNotFoundException {
+        List<Book>books=new ArrayList();
+        Book book = null;
+        String req = "SELECT  b.id, b.title, b.subtitle , b.release_date , e.name " 
+                    +"FROM book b " 
+                    +"JOIN editor e on(b.editor_id = e.id) " 
+                    +"JOIN book_author ba on(b.id=ba.book_id) " 
+                    +"JOIN author a on (a.id=ba.author_id) " 
+                    +"WHERE b.deleted = false AND a.id=?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setInt(1, id);
@@ -356,18 +360,22 @@ public class BookModel implements Crud<Book> {
         ResultSet rs = pstm.executeQuery();
 
         while (rs.next()) {
-            author = new Author(); 
-            author.setId(rs.getInt("id"));
-            author.setFirstName(rs.getString("firstname"));
-            author.setLastName(rs.getString("lastname")); 
-            authors.add(author);
+            book = new Book();
+            book.setId(rs.getInt("id"));
+            book.setTitle(rs.getString("title"));
+            book.setSubtitle(rs.getString("subtitle"));
+            book.setReleaseDate(rs.getDate("release_date"));
+            book.setEditorName(rs.getString("name"));            
+            books.add(book);
         }
 
         ConnectionUtil.close(rs);
         ConnectionUtil.close(pstm);
         ConnectionUtil.close(cnt);
 
-        return authors;
+        return books;
     }
+    
+    
 
 }

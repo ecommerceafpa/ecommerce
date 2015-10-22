@@ -1,6 +1,7 @@
 package fr.afpa.ecommerce.controller;
 
 import fr.afpa.ecommerce.bean.Book;
+import fr.afpa.ecommerce.model.AuthorModel;
 import fr.afpa.ecommerce.model.BookModel;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,11 +25,12 @@ public class DetailBookController extends HttpServlet {
         
         Integer id=Integer.parseInt(request.getParameter("id"));
         BookModel bookModel=new BookModel();
+        AuthorModel authorModel=new AuthorModel();
         
         try {
 
             request.setAttribute("book", bookModel.detailBook(id));
-            request.setAttribute("authors", bookModel.findAuthorsByBook(id));
+            request.setAttribute("authors", authorModel.findAuthorsByBook(id));
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DetailBookController.class.getName()).log(Level.SEVERE, null, ex);
         }        
