@@ -1,10 +1,9 @@
 package fr.afpa.ecommerce.controller;
 
-import fr.afpa.ecommerce.bean.Book;
 import fr.afpa.ecommerce.model.AuthorModel;
 import fr.afpa.ecommerce.model.BookModel;
+import fr.afpa.ecommerce.model.CategoryModel;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +25,10 @@ public class DetailAuthorController extends HttpServlet {
         Integer id = Integer.parseInt(request.getParameter("id"));
         AuthorModel authorModel = new AuthorModel();
         BookModel bookModel = new BookModel();
+        CategoryModel categoryModel = new CategoryModel();
 
         try {
-
+            request.setAttribute("categories", categoryModel.findParentCategories());
             request.setAttribute("author", authorModel.detailAuthor(id));
             request.setAttribute("books", bookModel.findBooksByAuthor(id));
 

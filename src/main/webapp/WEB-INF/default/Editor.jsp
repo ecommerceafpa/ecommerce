@@ -1,17 +1,35 @@
-<%-- 
-    Document   : Editor
-    Created on : 22 oct. 2015, 08:28:09
-    Author     : HP
---%>
+<jsp:include page="Header.jsp"/>
+<%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- Page Content -->
+<div class="container">
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+    <header class="jumbotron hero-spacer">
+        <h3>${editor.name} </h3>       
+    </header>
+    <div class="row">
+        <div class="col-lg-12">
+            <hr> 
+        </div>
+    </div>
+    <div class="row text-center">
+        <c:forEach var="book" items="${books}">
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt="">
+                    <div class="caption">
+                        <h3>${book.title}</h3>
+                        <p>${book.subtitle}</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> 
+                            <a href="Book?id=${book.id}" class="btn btn-default">Plus d'infos</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+
+    <hr>
+
+    <jsp:include page="Footer.jsp"/>

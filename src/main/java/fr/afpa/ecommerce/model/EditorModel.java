@@ -127,4 +127,30 @@ public class EditorModel implements Crud<Editor> {
         ConnectionUtil.close(cnt);
     }
 
+    public Editor findEditorByBook(Integer id) throws SQLException, IOException, ClassNotFoundException {
+
+        Editor editor = null;
+        String req = "select e.id, e.name "
+                   + "from editor e "
+                   + "join book b on (e.id=b.editor_id) "
+                   + "where b.id=?";
+        Connection cnt = ConnectionFactory.getConnection();
+        PreparedStatement pstm = cnt.prepareStatement(req);
+        pstm.setInt(1, id);
+
+        ResultSet rs = pstm.executeQuery();
+
+        while (rs.next()) {
+            editor = new Editor();
+            editor.setId(rs.getInt("id"));
+            editor.setName(rs.getString("name"));
+        }
+
+        ConnectionUtil.close(rs);
+        ConnectionUtil.close(pstm);
+        ConnectionUtil.close(cnt);
+
+        return editor;
+    }
+
 }

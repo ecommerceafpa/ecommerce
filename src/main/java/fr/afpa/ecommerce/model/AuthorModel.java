@@ -164,7 +164,10 @@ public class AuthorModel implements Crud<Author> {
        public List<Author> findAuthorsByBook(Integer id) throws SQLException, IOException, ClassNotFoundException {
         List<Author>authors=new ArrayList();
         Author author = null;
-        String req = "select a.id, a.firstname, a.lastname from author a join book_author ba on (a.id=ba.author_id) join book b on(b.id=ba.book_id) where b.id=?";
+        String req = "select a.id, a.firstname, a.lastname from author a "
+                   + "join book_author ba on (a.id=ba.author_id) "
+                   + "join book b on(b.id=ba.book_id) "
+                   + "where b.deleted = false AND b.id=?";
         Connection cnt = ConnectionFactory.getConnection();
         PreparedStatement pstm = cnt.prepareStatement(req);
         pstm.setInt(1, id);

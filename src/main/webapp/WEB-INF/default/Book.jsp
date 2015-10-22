@@ -27,15 +27,12 @@
 
                     <h5 >Langue: ${book.languageName} </h5>
 
-
-                    <h5 >Editeur: ${book.editorName} </h5>
-
+                    <h5 >Editeur: <a href="Editor?id=${editor.id}" >${book.editorName} </h5> </a>
 
                     <h5 >Numéro ISBN: ${book.isbn} </h5>
 
                     <fmt:setLocale value="fr"/>
                     <h5 >Date d'édition: <fmt:formatDate  pattern="dd MMMM yyyy" value="${book.releaseDate}"  /> </h5>
-
 
                     <h5 >Nombre de pages: ${book.nbPage} </h5>
 
